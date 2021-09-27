@@ -21,11 +21,11 @@ def sshCon():
 
     dev_info[passw]=passw_input
 
-    sshCon.jump_host_ip= 'Jumphost ip'       #Add your Jumphost ip
+    sshCon.jump_host_ip= '172.16.2.2'       #Add your Jumphost ip
     sshCon.jump_host_user=uname_input
     sshCon.jump_host_password=passw_input
 
-    sshCon.router_ip=input("Enter the ip: ")
+    sshCon.router_ip=input("Please enter device ip to login: ")
     # router_ip='10.2.13.5'
     sshCon.router_user= uname_input
     sshCon.router_password=passw_input
@@ -53,27 +53,39 @@ def funSsh():
 def configAd():
     funSsh()
     try:
-        print("Checking nested ssh")
-        router_ip1='10.6.0.5'
-        funSsh.net_connect1.write_channel(f"ssh {sshCon.router_user}@{router_ip1}\n")
-        time.sleep(2)
-        output=funSsh.net_connect1.read_channel()
-        print(output)
-        funSsh.net_connect1.write_channel(f"{sshCon.router_password}\n")
-        print(funSsh.net_connect1.find_prompt())
-        if 'password' in output:
-            print("Got it!")
-            funSsh.net_connect1.write_channel(f"{sshCon.router_password}\n")
-            time.sleep(2)
-            print("\n Destin dev prompt")
-            print(funSsh.net_connect1.find_prompt())
-
-            cmds=['show port description', 'show service service-using epipe']
-            redispatch(funSsh.net_connect1, device_type='alcatel_sros')
+        print("Checking for logs!!")
+        cmds=['show log log-id 99', 'show log log-id 99 application ospf']
+        redispatch(funSsh.net_connect1, device_type='alcatel_sros')
         for cmd in cmds:
             print(f"\nExecuting the command: {cmd}")
             router_output=funSsh.net_connect1.send_command(cmd)
-            print(router_output)
+            filename = input("Please insert the filename you would like to use: ")
+            with open(os.path.join(os.getcwd(), filename + ".txt"), 'a') as f:
+            # usrInput = input("user input >>> ")
+                    usrInput = router_output
+                    f.write("%s\n" % usrInput)
+        # print("Checking nested ssh")
+        # router_ip1=input("Please enter the device ip: ")
+        # #router_ip1='10.6.0.5'
+        # funSsh.net_connect1.write_channel(f"ssh {sshCon.router_user}@{router_ip1}\n")
+        # time.sleep(2)
+        # output=funSsh.net_connect1.read_channel()
+        # print(output)
+        # funSsh.net_connect1.write_channel(f"{sshCon.router_password}\n")
+        # print(funSsh.net_connect1.find_prompt())
+        # if 'password' in output:
+        #     print("Got it!")
+        #     funSsh.net_connect1.write_channel(f"{sshCon.router_password}\n")
+        #     time.sleep(2)
+        #     print("\n Destin dev prompt")
+        #     print(funSsh.net_connect1.find_prompt())
+
+        #     cmds=['show port description', 'show service service-using epipe']
+        #     redispatch(funSsh.net_connect1, device_type='alcatel_sros')
+        # for cmd in cmds:
+        #     print(f"\nExecuting the command: {cmd}")
+        #     router_output=funSsh.net_connect1.send_command(cmd)
+        #     print(router_output)
 
         # funSsh.net_connect1.write_channel(f"ssh {sshCon.router_user1}@{sshCon.router_ip1}\n")
         # time.sleep(2)
@@ -93,7 +105,7 @@ def configAd():
         #                         usrInput = output1
         #                         f.write("%s\n" % usrInput)
 
-        # return filename
+        # return filename 
     except NetMikoTimeoutException:
         print("Something went wrong!! \n Please check the following: \n 1. The ip address entered \n 2. The ip address format \n 3. Connection to Vertel network")
     
