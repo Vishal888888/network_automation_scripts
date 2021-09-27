@@ -21,7 +21,7 @@ def sshCon():
 
     dev_info[passw]=passw_input
 
-    sshCon.jump_host_ip= '172.16.2.2'       #Add your Jumphost ip
+    sshCon.jump_host_ip= 'Jumphost ip'       #Add your Jumphost ip
     sshCon.jump_host_user=uname_input
     sshCon.jump_host_password=passw_input
 
@@ -31,8 +31,8 @@ def sshCon():
     sshCon.router_password=passw_input
 
     # router_ip1='10.6.0.5'
-    # router_user1='vbisht'
-    # router_password1='Vertel112021??'
+    # router_user1='user'
+    # router_password1='password'
 
 def funSsh():
     sshCon()    
