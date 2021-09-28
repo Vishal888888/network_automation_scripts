@@ -1,3 +1,4 @@
+from typing import KeysView
 from netmiko import Netmiko, redispatch
 from getpass import getpass
 from dicfunc import dev_info 
@@ -8,6 +9,9 @@ import time
 import os
 from netmiko.ssh_exception import AuthenticationException, NetMikoTimeoutException
 import re
+import sys
+from io import StringIO
+
 
 def sshCon():
 
@@ -20,19 +24,24 @@ def sshCon():
     passw_input=getpass()
 
     dev_info[passw]=passw_input
+    config_file='/home/vbisht/.ssh/config'
+    ssh_config='ssh_config_file'
+    dev_info[ssh_config]=config_file
+    use_key=True
+    keys='Key_type'
+    dev_info[keys]= use_key
 
-    sshCon.jump_host_ip= 'Jumphost ip'       #Add your Jumphost ip
+    sshCon.jump_host_ip= 'Jumphost_ip'       #Add your Jumphost ip
     sshCon.jump_host_user=uname_input
     sshCon.jump_host_password=passw_input
+    sshCon.conf=config_file
 
     sshCon.router_ip=input("Please enter device ip to login: ")
     # router_ip='10.2.13.5'
     sshCon.router_user= uname_input
     sshCon.router_password=passw_input
 
-    # router_ip1='10.6.0.5'
-    # router_user1='user'
-    # router_password1='password'
+    
 
 def funSsh():
     sshCon()    
@@ -95,7 +104,7 @@ def configAd():
         # print(funSsh.net_connect1.find_prompt())
         # redispatch(funSsh.net_connect1, device_type='alcatel_sros')
         # out1=funSsh.net_connect1.send_command('admin display-config')
-        # print(out1)
+      
        
         # output1=funSsh.net_connect1.send_command('show log log-id 99')
         # print("Saving config to the file!!")
@@ -130,6 +139,7 @@ def serID():
         x=input("Please enter the service id: ")
         
         output1=funSsh.net_connect1.send_command('show service id %s base' % (x))
+        print(output1)
         # output1=net_connect.send_command('admin display-config')
 
 
@@ -180,15 +190,32 @@ def serID():
         print(output)
         funSsh.net_connect1.write_channel(f"{sshCon.router_password}\n")
         print(funSsh.net_connect1.find_prompt())
-        return filename
+
+##################Checking for SSH in multiple devices###############################################
+        # return filename
+        redispatch(funSsh.net_connect1, device_type='alcatel_sros')
+        print("Checking ip's in the list")
+        f=open('traceservice.txt')
+        print("Text file open: Now running for loop!!")
+        for ip in f: 
+                    # funSsh.net_connect2=Netmiko(device_type='alcatel_sros', host=sshCon.jump_host_ip, username=sshCon.jump_host_user, password=sshCon.jump_host_password, ssh_config_file=sshCon.conf, system_host_keys=True)
+                    funSsh.net_connect1.write_channel(f"ssh {sshCon.router_user}@{ip}\n") #SSH KEYS NOT WORKING
+                    # funSsh.net_connect1.load_system_host_keys()
+                    time.sleep(2)
+                    output=funSsh.net_connect1.read_channel()
+                    
+                    print(output)
+                    funSsh.net_connect1.write_channel(f"{sshCon.router_password}\n")
+                    print(funSsh.net_connect1.find_prompt())
+##############################################################################################################################
     except NetMikoTimeoutException:
         print("Something went wrong!! \n Please check the following: \n 1. The ip address entered \n 2. The ip address format \n 3. Connection to Vertel network")
     
     except AuthenticationException:
         print(">>>>>>>>>Authentication Failure!! Please check the username and password entered!!<<<<<<<<<<<<<<< \n")
     
-    except Exception as unknown_error:
-        print("Something unknown happened! Check for the device logs or consult with the network administrator!")
+    # except Exception as unknown_error:
+    #     print("Something unknown happened! Check for the device logs or consult with the network administrator!")
 
 ############Main script############
 '''   
