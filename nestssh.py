@@ -104,7 +104,7 @@ def configAd():
         # print(funSsh.net_connect1.find_prompt())
         # redispatch(funSsh.net_connect1, device_type='alcatel_sros')
         # out1=funSsh.net_connect1.send_command('admin display-config')
-        # print(out1)
+      
        
         # output1=funSsh.net_connect1.send_command('show log log-id 99')
         # print("Saving config to the file!!")
