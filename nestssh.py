@@ -165,7 +165,7 @@ def serID():
             match=re.findall(r"\s{1}\s\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", output_ping)
             str1='\n'.join(match).replace(" ","")   #trace ip list with no white space in a separate file
             # str1.replace(" ","")
-            # print(str1.replace(" ",""))
+            
             f=open("traceservice.txt" , "w")
             f.write(str(str1))
             print("Done!")
