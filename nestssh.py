@@ -116,7 +116,7 @@ def configAd():
 
         # return filename 
     except NetMikoTimeoutException:
-        print("Something went wrong!! \n Please check the following: \n 1. The ip address entered \n 2. The ip address format \n 3. Connection to Vertel network")
+        print("Something went wrong!! \n Please check the following: \n 1. The ip address entered \n 2. The ip address format \n 3. Connection to company network")
     
     except AuthenticationException:
         print(">>>>>>>>>Authentication Failure!! Please check the username and password entered!!<<<<<<<<<<<<<<< \n")
@@ -209,7 +209,7 @@ def serID():
                     print(funSsh.net_connect1.find_prompt())
 ##############################################################################################################################
     except NetMikoTimeoutException:
-        print("Something went wrong!! \n Please check the following: \n 1. The ip address entered \n 2. The ip address format \n 3. Connection to Vertel network")
+        print("Something went wrong!! \n Please check the following: \n 1. The ip address entered \n 2. The ip address format \n 3. Connection to company network")
     
     except AuthenticationException:
         print(">>>>>>>>>Authentication Failure!! Please check the username and password entered!!<<<<<<<<<<<<<<< \n")
