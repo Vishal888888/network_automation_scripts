@@ -73,48 +73,7 @@ def configAd():
             # usrInput = input("user input >>> ")
                     usrInput = router_output
                     f.write("%s\n" % usrInput)
-        # print("Checking nested ssh")
-        # router_ip1=input("Please enter the device ip: ")
-        # #router_ip1='10.6.0.5'
-        # funSsh.net_connect1.write_channel(f"ssh {sshCon.router_user}@{router_ip1}\n")
-        # time.sleep(2)
-        # output=funSsh.net_connect1.read_channel()
-        # print(output)
-        # funSsh.net_connect1.write_channel(f"{sshCon.router_password}\n")
-        # print(funSsh.net_connect1.find_prompt())
-        # if 'password' in output:
-        #     print("Got it!")
-        #     funSsh.net_connect1.write_channel(f"{sshCon.router_password}\n")
-        #     time.sleep(2)
-        #     print("\n Destin dev prompt")
-        #     print(funSsh.net_connect1.find_prompt())
-
-        #     cmds=['show port description', 'show service service-using epipe']
-        #     redispatch(funSsh.net_connect1, device_type='alcatel_sros')
-        # for cmd in cmds:
-        #     print(f"\nExecuting the command: {cmd}")
-        #     router_output=funSsh.net_connect1.send_command(cmd)
-        #     print(router_output)
-
-        # funSsh.net_connect1.write_channel(f"ssh {sshCon.router_user1}@{sshCon.router_ip1}\n")
-        # time.sleep(2)
-        # output=funSsh.net_connect1.read_channel()
-        # print(output)
-        # funSsh.net_connect1.write_channel(f"{sshCon.router_password1}\n")
-        # print(funSsh.net_connect1.find_prompt())
-        # redispatch(funSsh.net_connect1, device_type='alcatel_sros')
-        # out1=funSsh.net_connect1.send_command('admin display-config')
-      
-       
-        # output1=funSsh.net_connect1.send_command('show log log-id 99')
-        # print("Saving config to the file!!")
-        # filename = input("Please insert the filename you would like to use: ")
-        # with open(os.path.join(os.getcwd(), filename + ".txt"), 'a') as f:
-        #                         # usrInput = input("user input >>> ")
-        #                         usrInput = output1
-        #                         f.write("%s\n" % usrInput)
-
-        # return filename 
+        
     except NetMikoTimeoutException:
         print("Something went wrong!! \n Please check the following: \n 1. The ip address entered \n 2. The ip address format \n 3. Connection to company network")
     
@@ -125,13 +84,6 @@ def configAd():
         print("Something unknown happened! Check for the device logs or consult with the network administrator!")
     # funSsh.net_connect1.write_channel(f"ssh {router_user}@{router_ip}\n")
 
-# def tracSsh():
-#     funSsh()
-#     funSsh.net_connect1.write_channel(f"ssh {sshCon.router_user}@{router_ip1}\n")  #Need to change the ip part
-#     output_ping=funSsh.net_connect1.send_command('traceroute 10.10.0.15')
-#     match=re.findall(r"\s{1}\s\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", output_ping)
-#     str1=''.join(match)
-#     print(str1)
 
 def serID():
     funSsh()
@@ -218,38 +170,7 @@ def serID():
     #     print("Something unknown happened! Check for the device logs or consult with the network administrator!")
 
 ############Main script############
-'''   
-    funSsh.net_connect1.write_channel(f"ssh {router_user}@{router_ip}\n")
-    time.sleep(2)
-    output=funSsh.net_connect1.read_channel()
-    print(output)
-    funSsh.net_connect1.write_channel(f"{router_password}\n")
-    print(funSsh.net_connect1.find_prompt())
-    print("Checking nested ssh")
-    funSsh.net_connect1.write_channel(f"ssh {router_user1}@{router_ip1}\n")
-    time.sleep(2)
-    output=funSsh.net_connect1.read_channel()
-    print(output)
-    funSsh.net_connect1.write_channel(f"{router_password1}\n")
-    print(funSsh.net_connect1.find_prompt())
-    redispatch(funSsh.net_connect1, device_type='alcatel_sros')
-    out1=funSsh.net_connect1.send_command('admin display-config')
-    print(out1)
-'''
 
-    # if 'password' in output:
-    #     print("Got it!")
-    #     funSsh.net_connect1.write_channel(f"{router_password}\n")
-    #     time.sleep(2)
-    #     print("\n Destin dev prompt")
-    #     print(funSsh.net_connect1.find_prompt())
-
-    #     cmds=['show port description', 'show service service-using epipe']
-    #     redispatch(funSsh.net_connect1, device_type='alcatel_sros')
-    #     for cmd in cmds:
-    #         print(f"\nExecuting the command: {cmd}")
-    #         router_output=funSsh.net_connect1.send_command(cmd)
-    #         print(router_output)
 
 if __name__ == '__main__':
     print("Working on it!!")
